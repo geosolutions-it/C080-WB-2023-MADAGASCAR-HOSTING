@@ -28,7 +28,7 @@ a:hover, a:focus {
 	line-height: 24px;
 	font-size:12px;
 }
-body.people li#nav_people a, body.documents li#nav_documents a, body.maps li#nav_maps a, body.layers li#nav_layers a, body.groups li#nav_groups a{
+body.people li#nav_people a, body.documents li#nav_documents a, body.maps li#nav_maps a, body.layers li#nav_layers a, body.groups li#nav_groups a, body.partenaires li#nav_partenaires{
     background: #17daec !important;
 }
 @media (min-width: 768px) {
