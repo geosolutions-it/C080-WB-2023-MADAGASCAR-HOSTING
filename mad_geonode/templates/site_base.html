@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block extra_head %}
+	<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet"/>
+	<title>Tombandoza </title>
+      	<link href="{{ STATIC_URL }}css/site_base.css" rel="stylesheet"/>
+	<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet"/>
+
+
+{% endblock %}
+
+{% block extra_tab %}
+<li id="nav_partenaires">
+              <a href="{% url 'partenaire_list' %}">Partenaires {{SITEURL}}</a>
+</li>
+{% endblock %}
+
+{% block about %}
+	            <div class="col-md-8">
+            &copy; 2016 <a target="_blank" href="http://41.204.114.2" title="Mahatsangy,Un outils de gestion de risque et catastrophe naturelle">Mahatsangy</a>. Tous droits reservés.
+          </div>
+{% endblock about  %}
+
+
+
+
