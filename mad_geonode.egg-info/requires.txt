@@ -1,2 +1,6 @@
 django-tastypie==0.11.0
+<<<<<<< HEAD
 geonode==2.4b25
+=======
+geonode==2.4b25
+>>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e

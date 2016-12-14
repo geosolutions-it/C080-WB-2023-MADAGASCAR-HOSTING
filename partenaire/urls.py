@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 
@@ -11,3 +12,12 @@ urlpatterns = patterns('partenaire.views',
        name='partenaire_list'),
     )
 
+=======
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+]
+>>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e

@@ -47,6 +47,7 @@ STATICFILES_DIRS.append(
 
 # Note that Django automatically includes the "templates" dir in all the
 # INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
+<<<<<<< HEAD
 
 INSTALLED_APPS = (
 
@@ -107,6 +108,8 @@ INSTALLED_APPS = (
 SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
 
 
+=======
+>>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e
 TEMPLATE_DIRS = (
     os.path.join(LOCAL_ROOT, "templates"),
 ) + TEMPLATE_DIRS
