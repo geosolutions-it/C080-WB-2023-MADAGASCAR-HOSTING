@@ -4,10 +4,10 @@ import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 SITENAME = "GeoNode Tombandoza"
-SITEURL = "http://41.204.114.2/"
+SITEURL = "http://192.99.219.129/"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1', '41.204.114.2']
-PROXY_ALLOWED_HOSTS = ('127.0.0.1', 'localhost', '::1', '41.204.114.2')
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1', '192.99.219.129']
+PROXY_ALLOWED_HOSTS = ('127.0.0.1', 'localhost', '::1', '192.99.219.129')
 
 POSTGIS_VERSION = (2, 1, 8)
 
@@ -35,7 +35,7 @@ OGC_SERVER = {
     'default' : {
         'BACKEND' : 'geonode.geoserver',
         'LOCATION' : 'http://localhost:8080/geoserver/',
-        'PUBLIC_LOCATION' : 'http://41.204.114.2/geoserver/',
+        'PUBLIC_LOCATION' : 'http://192.99.219.129/geoserver/',
         'USER' : 'admin',
         'PASSWORD' : 'geoserver',
         'MAPFISH_PRINT_ENABLED' : True,
