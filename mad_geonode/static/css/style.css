@@ -182,14 +182,8 @@ h3 {
     overflow: hidden;
 }
 
-<<<<<<< HEAD
-#datasets {
-=======
 #about {
->>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e
-   
 	position: relative;
-    
 }
 #partenaire .box {
     background: #fff;
@@ -200,38 +194,23 @@ h3 {
 	margin-top:1px;
 }
 
-<<<<<<< HEAD
-#datasets {
-    margin-top: -60px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    padding-left: 5%;
-    padding-right: 5%;
-    background: #fff;
-    border-bottom: 1px solid #e9e9e9;
-    position: relative;
-=======
 .box.first {
     margin-top: -60px;
     border-radius: 5px 5px 0 0;
     padding-bottom: 40px;
     padding-left: 5%;
     padding-right: 5%;
->>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e
 }
 .box.last {
     border-radius: 0 0 5px 5px;
 }
 
-<<<<<<< HEAD
-=======
 .box {
     padding: 5px 0px;
     background: #fff;
     border-bottom: 1px solid #e9e9e9;
     position: relative;
 }
->>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e
 
 .box {
     margin-left: -15px;
@@ -257,11 +236,3 @@ width:20%
 .member p {
     margin: 0 0 5px;
 }
-
-<<<<<<< HEAD
-.col-sm-2 {
-    width: 16.66666667%;
-}
-
-=======
->>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e

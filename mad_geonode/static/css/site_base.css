@@ -2,11 +2,7 @@ body {
     font-family: Georgia, "Times New Roman", Times, serif;
     font-size: 16px;
     line-height: 1.42857143;
-<<<<<<< HEAD
-    color: #0f0e0e;
-=======
     color: #777;
->>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e
 	background: #e5e5e5;
 }
 a{color:#0B243B;}
@@ -32,11 +28,7 @@ a:hover, a:focus {
 	line-height: 24px;
 	font-size:12px;
 }
-<<<<<<< HEAD
-body.people li#nav_people a, body.documents li#nav_documents a, body.maps li#nav_maps a, body.layers li#nav_layers a, body.groups li#nav_groups a, body.partenaires li#nav_partenaires a{
-=======
 body.people li#nav_people a, body.documents li#nav_documents a, body.maps li#nav_maps a, body.layers li#nav_layers a, body.groups li#nav_groups a, body.partenaires li#nav_partenaires{
->>>>>>> 9c269c01542befb8fbb9791076aa2b98dd31892e
     background: #17daec !important;
 }
 @media (min-width: 768px) {
