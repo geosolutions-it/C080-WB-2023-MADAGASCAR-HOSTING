@@ -45,6 +45,76 @@ STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
 )
 
+# Note that Django automatically includes the "templates" dir in all the
+# INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
+#HEAD
+
+INSTALLED_APPS = (
+
+    'modeltranslation',
+
+    # Boostrap admin theme
+    # 'django_admin_bootstrapped.bootstrap3',
+    # 'django_admin_bootstrapped',
+
+    # Apps bundled with Django
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.admin',
+    'django.contrib.sitemaps',
+    'django.contrib.staticfiles',
+    'django.contrib.messages',
+    'django.contrib.humanize',
+    'django.contrib.gis',
+
+    # Third party apps
+
+    # Utility
+    'pagination',
+    'taggit',
+    'friendlytagloader',
+    'geoexplorer',
+    'leaflet',
+    'django_extensions',
+    # 'haystack',
+    'autocomplete_light',
+    'mptt',
+    'djcelery',
+
+    # Theme
+    "pinax_theme_bootstrap_account",
+    "pinax_theme_bootstrap",
+    'django_forms_bootstrap',
+
+    # Social
+    'account',
+    'avatar',
+    'dialogos',
+    'agon_ratings',
+    'notification',
+    'announcements',
+    'actstream',
+    'user_messages',
+    'tastypie',
+    'polymorphic',
+    'guardian',
+    'partenaire',
+
+
+) + GEONODE_APPS
+
+
+SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
+
+
+
+
+TEMPLATE_DIRS = (
+    os.path.join(LOCAL_ROOT, "templates"),
+)
+
 # Location of url mappings
 ROOT_URLCONF = 'mad_geonode.urls'
 
@@ -52,6 +122,4 @@ ROOT_URLCONF = 'mad_geonode.urls'
 LOCALE_PATHS = (
     os.path.join(LOCAL_ROOT, 'locale'),
     ) + LOCALE_PATHS
-
-INSTALLED_APPS = INSTALLED_APPS + ('mad_geonode',)
 
