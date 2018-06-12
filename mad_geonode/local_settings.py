@@ -1,13 +1,15 @@
 import os
 
+DEBUG = True
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 SITENAME = "GeoNode Tombandoza"
-SITEURL = "http://192.99.219.129/"
+# SITEURL = "http://192.99.219.129/"
+SITEURL = "http://www.resiliencemada.gov.mg/"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1', '192.99.219.129']
-PROXY_ALLOWED_HOSTS = ('127.0.0.1', 'localhost', '::1', '192.99.219.129')
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '::1', '192.99.219.129', 'www.resiliencemada.gov.mg']
+PROXY_ALLOWED_HOSTS = ('127.0.0.1', 'localhost', '::1', '192.99.219.129', 'www.resiliencemada.gov.mg')
 
 POSTGIS_VERSION = (2, 1, 8)
 
@@ -35,19 +37,24 @@ OGC_SERVER = {
     'default' : {
         'BACKEND' : 'geonode.geoserver',
         'LOCATION' : 'http://localhost:8080/geoserver/',
-        'PUBLIC_LOCATION' : 'http://192.99.219.129/geoserver/',
+        'LOGIN_ENDPOINT': 'j_spring_oauth2_geonode_login',
+        'LOGOUT_ENDPOINT': 'j_spring_oauth2_geonode_logout',
+        'PUBLIC_LOCATION' : 'http://www.resiliencemada.gov.mg/geoserver/',
         'USER' : 'admin',
-        'PASSWORD' : 'geoserver',
-        'MAPFISH_PRINT_ENABLED' : True,
-        'PRINT_NG_ENABLED' : True,
-        'GEONODE_SECURITY_ENABLED' : True,
-        'GEOGIG_ENABLED' : False,
-        'WMST_ENABLED' : False,
+        'PASSWORD' : '1geoserver2',
+        'MAPFISH_PRINT_ENABLED': True,
+        'PRINT_NG_ENABLED': True,
+        'GEONODE_SECURITY_ENABLED': True,
+        'GEOFENCE_SECURITY_ENABLED': True,
+        'GEOGIG_ENABLED': False,
+        'WMST_ENABLED': False,
         'BACKEND_WRITE_ENABLED': True,
-        'WPS_ENABLED' : False,
+        'WPS_ENABLED': False,
         'LOG_FILE': '%s/geoserver/data/logs/geoserver.log' % os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir)),
-        # Set to name of database in DATABASES dictionary to enable
+        # Set to dictionary identifier of database containing spatial data in DATABASES dictionary to enable
         'DATASTORE': 'datastore',
+        'PG_GEOGIG': False,
+        'TIMEOUT': 10  # number of seconds to allow for HTTP requests
     }
 }
 
