@@ -3,6 +3,14 @@
 {% comment %}
 This is where you can override the hero area block. You can simply modify the content below or replace it wholesale to meet your own needs. 
 {% endcomment %}
+  {% block extra_head %}
+    <script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-124353827-1', 'auto');
+	ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+  {% endblock %}
   {% block hero %}
   <div id="carousel-example-generic" class="carousel slide jumbotron" data-ride="carousel">
   <!-- Indicators -->
