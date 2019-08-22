@@ -23,13 +23,9 @@ import os
 
 # Load more settings from a file called local_settings.py if it exists
 try:
-    from geonode.local_settings import *
+    from local_settings import *
 except ImportError:
     from geonode.settings import *
-
-#
-# General Django development settings
-#
 
 SITENAME = 'mad_geonode'
 
@@ -38,13 +34,6 @@ SITENAME = 'mad_geonode'
 LOCAL_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 WSGI_APPLICATION = "mad_geonode.wsgi.application"
-
-
-# Load more settings from a file called local_settings.py if it exists
-try:
-    from local_settings import *
-except ImportError:
-    pass
 
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
@@ -59,7 +48,4 @@ LOCALE_PATHS = (
     os.path.join(LOCAL_ROOT, 'locale'),
     ) + LOCALE_PATHS
 
-INSTALLED_APPS = INSTALLED_APPS + ('mad_geonode',)
-
-MONITORING_ENABLED = False
-
+INSTALLED_APPS = INSTALLED_APPS + ('partenaire', 'mad_geonode',)

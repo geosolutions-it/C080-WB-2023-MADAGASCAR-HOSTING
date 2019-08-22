@@ -1,4 +1,5 @@
 README.rst
+setup.py
 mad_geonode/__init__.py
 mad_geonode/local_settings.py
 mad_geonode/settings.py
