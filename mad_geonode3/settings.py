@@ -56,6 +56,7 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', "en")
 
 INSTALLED_APPS += ('partenaire',)
+# INSTALLED_APPS += ('oca',)
 if PROJECT_NAME not in INSTALLED_APPS:
     INSTALLED_APPS += (PROJECT_NAME,)
 
@@ -77,6 +78,15 @@ loaders = TEMPLATES[0]['OPTIONS'].get('loaders') or ['django.template.loaders.fi
 # loaders.insert(0, 'apptemplates.Loader')
 TEMPLATES[0]['OPTIONS']['loaders'] = loaders
 TEMPLATES[0].pop('APP_DIRS', None)
+
+# Settings for MONITORING plugin
+MONITORING_ENABLED = ast.literal_eval(os.environ.get('MONITORING_ENABLED', 'False'))
+
+if MONITORING_ENABLED:
+    CELERY_BEAT_SCHEDULE['collect_metrics'] = {
+        'task': 'geonode.monitoring.tasks.collect_metrics',
+        'schedule': 60.0,
+    }
 
 LOGGING = {
     'version': 1,
@@ -119,7 +129,7 @@ LOGGING = {
         "pycsw": {
             "handlers": ["console"], "level": "ERROR", },
         "celery": {
-            "handlers": ["console"], "level": "ERROR", },
+            "handlers": ["console"], "level": "DEBUG", },
         "mapstore2_adapter.plugins.serializers": {
             "handlers": ["console"], "level": "DEBUG", },
         "geonode_logstash.logstash": {
