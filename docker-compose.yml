@@ -90,7 +90,7 @@ services:
     env_file:
       - .env
     environment:
-      CELERY_CMD: celery worker -A geonode.celery_app -c 4 -P threads -l DEBUG -f /var/log/celery.log
+      CELERY_CMD: celery worker --app=geonode.celery_app:app -l DEBUG -c 4 -P threads -f /var/log/celery.log
       IS_CELERY: 'True'
 
   celerybeat:
