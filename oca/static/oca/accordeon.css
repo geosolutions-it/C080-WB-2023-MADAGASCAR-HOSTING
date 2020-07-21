@@ -1,0 +1,90 @@
+
+/* Remove focus ring as all screen readers tested on, add their own focus ring */
+:focus{
+  outline: 0;
+}
+
+/* ---------------------------------
+
+		A C C O R D I A N
+
+--------------------------------- */
+
+.accordion{
+	border-radius: 3px;
+	overflow: hidden;
+	border: 1px solid #6495ED;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.accordion-panel__heading{
+	position: relative;
+	padding: 20px;
+	display: block;
+	text-decoration: none;
+	color: #6495ED;
+	background: #0072c5;
+	font-size: 20px !important;
+	font-weight: 600;
+	transition: all .2s;
+	cursor:pointer;
+}
+.accordion-panel__heading:not(:last-child){
+  border-bottom: 1px solid #6495ED;
+}
+.accordion-panel__heading:before{
+	transition: all .2s ease;
+	content: "";
+	border: 0px #6495ED solid;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+}
+.accordion-panel__heading.active:before{
+	transition: all .2s;
+	border-left: 8px #0072c5 solid;
+}
+.accordion-panel__heading:hover{
+	color: #6495ED !important;
+	background: #f1f1f1;
+	transition: all .2s;
+}
+.accordion-panel__heading.active:hover,
+.accordion-panel__heading.active {
+  transition: all .2s;
+  color: #0072c5;
+  background: #fff;
+  border-bottom: 0;
+  padding: 10px 10px 10px 20px;
+}
+.accordion-panel__content{
+  transition: all .2s;
+  position: relative;
+  padding: 0 20px 0 20px;
+  background: #f1f1f1;
+  max-height: 0;
+  overflow: hidden;
+}
+.accordion-panel__content:before{
+  transition: all .2s ease;
+  content: "";
+  border: 0px #6495ED solid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+}
+.accordion-panel__content.active:before{
+  transition: all .2s;
+  border-left: 8px #0072c5 solid;
+}
+.accordion-panel__content.active {
+  transition: all .2s;
+  max-height: 500px;
+  background: #92B5F3;
+  padding: 10px 20px 15px 30px;
+  color:#fff;
+}
