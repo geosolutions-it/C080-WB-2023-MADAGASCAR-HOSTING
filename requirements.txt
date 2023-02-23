@@ -1,5 +1,6 @@
 # GeoNode
 # from Pypi:
 #GeoNode==3.0
--e git+https://github.com/GeoNode/geonode.git#egg=GeoNode
+-e git+https://github.com/GeoNode/geonode.git@3.0#egg=GeoNode
+django-geonode-mapstore-client==2.1.1
 setuptools==49.2.0

@@ -1,12 +1,15 @@
-FROM python:3.8.3-buster
+FROM python:3.8.9-buster
 MAINTAINER GeoNode development team
 
 RUN mkdir -p /usr/src/mad_geonode3
 
 # Enable postgresql-client-11.2
+RUN apt-get install -y ca-certificates 
+RUN wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+# RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-
+RUN chmod 1777 /tmp
+# RUN mount | grep /tmp
 
 # This section is borrowed from the official Django image but adds GDAL and others
 RUN apt-get update && apt-get install -y \
@@ -25,7 +28,10 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 
-RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+# RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B48AD6246925553
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7638D0442B90D010
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CBF8D6FD518E17E1
 RUN apt-get update && apt-get install -y geoip-bin
 
 # add bower and grunt command

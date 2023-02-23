@@ -152,3 +152,38 @@ if LDAP_ENABLED and 'geonode_ldap' not in INSTALLED_APPS:
 
 # Add your specific LDAP configuration after this comment:
 # https://docs.geonode.org/en/master/advanced/contrib/#configuration
+
+"""
+Default schema used to store extra and dynamic metadata for the resource
+"""
+
+#DEFAULT_EXTRA_METADATA_SCHEMA = {
+#    Optional("id"): int,
+#    "filter_header": object,
+#    "field_name": object,
+#    "field_label": object,
+#    "field_value": object,
+#}
+
+"""
+If present, will extend the available metadata schema used for store
+new value for each resource. By default overrided the existing one.
+The expected schema is the same as the default
+"""
+#CUSTOM_METADATA_SCHEMA = os.getenv("CUSTOM_METADATA_SCHEMA ", {})
+
+"""
+Variable used to actually get the expected metadata schema for each resource_type.
+In this way, each resource type can have a different metadata schema
+"""
+
+#EXTRA_METADATA_SCHEMA = {
+#    **{
+#        "map": os.getenv("MAP_EXTRA_METADATA_SCHEMA", DEFAULT_EXTRA_METADATA_SCHEMA),
+#        "dataset": os.getenv("DATASET_EXTRA_METADATA_SCHEMA", DEFAULT_EXTRA_METADATA_SCHEMA),
+#        "document": os.getenv("DOCUMENT_EXTRA_METADATA_SCHEMA", DEFAULT_EXTRA_METADATA_SCHEMA),
+#        "geoapp": os.getenv("GEOAPP_EXTRA_METADATA_SCHEMA", DEFAULT_EXTRA_METADATA_SCHEMA),
+#    },
+#    **CUSTOM_METADATA_SCHEMA,
+#}
+
