@@ -16,16 +16,28 @@ services:
     env_file:
       - .env
 
+  # Vanilla RabbitMQ service. This is needed by celery
   rabbitmq:
-    image: rabbitmq
-    restart: unless-stopped
+    image: rabbitmq:3.7-alpine
     container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
-    stdin_open: true
-    tty: true
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    restart: on-failure
     labels:
         org.geonode.component: rabbitmq
         org.geonode.instance.name: geonode
         org.geonode.deployment.name: ${COMPOSE_PROJECT_NAME}
+
+#  rabbitmq:
+#    image: rabbitmq
+#    restart: unless-stopped
+#    container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
+#    stdin_open: true
+#    tty: true
+#    labels:
+#        org.geonode.component: rabbitmq
+#        org.geonode.instance.name: geonode
+#        org.geonode.deployment.name: ${COMPOSE_PROJECT_NAME}
 
   geoserver:
     image: geonode/geoserver:2.17.1
@@ -189,3 +201,5 @@ volumes:
     name: ${COMPOSE_PROJECT_NAME}-dbbackups
   backup-restore:
     name: ${COMPOSE_PROJECT_NAME}-backup-restore
+  rabbitmq:
+    name: ${COMPOSE_PROJECT_NAME}-rabbitmq
