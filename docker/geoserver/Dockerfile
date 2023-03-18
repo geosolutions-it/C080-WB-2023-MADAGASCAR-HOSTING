@@ -4,16 +4,17 @@ MAINTAINER GeoNode Development Team
 #
 # Set GeoServer version and data directory
 #
-ENV GEOSERVER_VERSION=2.17.1
+ENV GEOSERVER_VERSION=2.18.7
 ENV GEOSERVER_DATA_DIR="/geoserver_data/data"
 
 #
 # Download and install GeoServer
 #
+RUN apt-get update -y && apt-get install curl wget unzip -y
 RUN cd /usr/local/tomcat/webapps \
-    && wget --no-check-certificate --progress=bar:force:noscroll https://build.geo-solutions.it/geonode/geoserver/latest/geoserver-${GEOSERVER_VERSION}.war \
-    && unzip -q geoserver-${GEOSERVER_VERSION}.war -d geoserver \
-    && rm geoserver-${GEOSERVER_VERSION}.war \
+    && wget --no-check-certificate --progress=bar:force:noscroll https://artifacts.geonode.org/geoserver/${GEOSERVER_VERSION}/geoserver.war -O geoserver.war \
+    && unzip -q geoserver.war -d geoserver \
+    && rm geoserver.war \
     && mkdir -p $GEOSERVER_DATA_DIR
 
 VOLUME $GEOSERVER_DATA_DIR
@@ -27,10 +28,10 @@ RUN if [ "$JAI_IMAGEIO" = true ]; then \
     mv /tmp/marlin-0.9.3-Unsafe.jar /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/ ; \
     fi
 
-RUN wget --no-check-certificate https://build.geo-solutions.it/geonode/geoserver/latest/postgis-jdbc-1.3.3/postgis-jdbc-1.3.3.jar && \
-    wget --no-check-certificate https://build.geo-solutions.it/geonode/geoserver/latest/hibernate-spatial-postgis-1.1.3.1/hibernate-spatial-postgis-1.1.3.1.jar && \
-    rm /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/hibernate-spatial-h2-geodb-1.1.3.1.jar && \
-    mv hibernate-spatial-postgis-1.1.3.1.jar /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/ && \
+RUN wget --no-check-certificate https://repo1.maven.org/maven2/org/postgis/postgis-jdbc/1.3.3/postgis-jdbc-1.3.3.jar -O postgis-jdbc-1.3.3.jar && \
+    wget --no-check-certificate https://maven.geo-solutions.it/org/hibernatespatial/hibernate-spatial-postgis/1.1.3.2/hibernate-spatial-postgis-1.1.3.2.jar -O hibernate-spatial-postgis-1.1.3.2.jar && \
+    rm /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/hibernate-spatial-h2-geodb-1.1.3.2.jar && \
+    mv hibernate-spatial-postgis-1.1.3.2.jar /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/ && \
     mv postgis-jdbc-1.3.3.jar /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/
 
 ###########docker host###############
@@ -89,12 +90,12 @@ COPY entrypoint.sh /usr/local/tomcat/tmp
 COPY datasource-ovr.properties /usr/local/tomcat/tmp
 
 RUN apt-get update \
-    && apt-get -y upgrade \
+    && apt-get install -y procps less \
     && apt-get install -y python3 python3-pip python3-dev \
     && chmod +x /usr/local/tomcat/tmp/set_geoserver_auth.sh \
     && chmod +x /usr/local/tomcat/tmp/setup_auth.sh \
     && chmod +x /usr/local/tomcat/tmp/entrypoint.sh \
-    && pip3 install pip==9.0.3 \
+    && pip3 install pip --upgrade \
     && pip3 install -r requirements.txt \
     && chmod +x /usr/local/tomcat/tmp/get_dockerhost_ip.py \
     && chmod +x /usr/local/tomcat/tmp/get_nginxhost_ip.py

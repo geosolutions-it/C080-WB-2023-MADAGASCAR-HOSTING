@@ -28,19 +28,8 @@ services:
         org.geonode.instance.name: geonode
         org.geonode.deployment.name: ${COMPOSE_PROJECT_NAME}
 
-#  rabbitmq:
-#    image: rabbitmq
-#    restart: unless-stopped
-#    container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
-#    stdin_open: true
-#    tty: true
-#    labels:
-#        org.geonode.component: rabbitmq
-#        org.geonode.instance.name: geonode
-#        org.geonode.deployment.name: ${COMPOSE_PROJECT_NAME}
-
   geoserver:
-    image: geonode/geoserver:2.17.1
+    image: geonode/geoserver:2.18.7
     build: ./docker/geoserver/
     restart: unless-stopped
     container_name: geoserver4${COMPOSE_PROJECT_NAME}
@@ -102,7 +91,8 @@ services:
     env_file:
       - .env
     environment:
-      CELERY_CMD: celery worker --beat --app=geonode.celery_app:app -l DEBUG -f /var/log/celery.log
+      # CELERY_CMD: celery worker --beat --app=geonode.celery_app:app -l DEBUG -f /var/log/celery.log
+      CELERY_CMD: celery -A geonode.celery_app:app worker --autoscale=15,10 --max-memory-per-child=200000 --without-gossip --without-mingle -Ofair -B -E --statedb=/mnt/volumes/statics/worker.state --scheduler=celery.beat:PersistentScheduler --loglevel=INFO -n worker1@%h -f /var/log/celery.log --concurrency=4 --max-tasks-per-child=10
       IS_CELERY: 'True'
 
   # - Uncomment to enable celery monitor
