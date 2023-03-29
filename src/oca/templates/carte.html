@@ -1,0 +1,1096 @@
+{% load static %}
+<meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
+<link rel="stylesheet" href="{% static 'oca/leaflet.css' %}" />
+<script src="{% static 'oca/leaflet.js' %}"></script>
+<script src="{% static 'oca/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'oca/loadingView.js' %}"></script>
+<link rel="stylesheet" href="{% static 'oca/jquery-ui.min.css' %}" />
+<link rel="stylesheet" href="{% static 'oca/accordeon.css' %}" />
+<script src="{% static 'oca/accordeon.js' %}"></script>
+<link rel="stylesheet" href="{% static 'oca/table.css' %}" />
+<link rel="stylesheet" href="{% static 'oca/tabulation.css' %}" />
+<link rel="stylesheet" href="{% static 'oca/src/leaflet.draw.css' %}"/>
+<script src="{% static 'oca/src/Leaflet.draw.js' %}"></script>
+<script src="{% static 'oca/src/Leaflet.Draw.Event.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/Edit.Poly.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/Edit.SimpleShape.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/Edit.Rectangle.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/Edit.Marker.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/Edit.CircleMarker.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/Edit.Circle.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.Feature.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.Polyline.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.Polygon.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.SimpleShape.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.Rectangle.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.Circle.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.Marker.js' %}"></script>
+<script src="{% static 'oca/src/draw/handler/Draw.CircleMarker.js' %}"></script>
+<script src="{% static 'oca/src/ext/TouchEvents.js' %}"></script>
+<script src="{% static 'oca/src/ext/LatLngUtil.js' %}"></script>
+<script src="{% static 'oca/src/ext/GeometryUtil.js' %}"></script>
+<script src="{% static 'oca/src/ext/LineUtil.Intersect.js' %}"></script>
+<script src="{% static 'oca/src/ext/Polyline.Intersect.js' %}"></script>
+<script src="{% static 'oca/src/ext/Polygon.Intersect.js' %}"></script>   
+<script src="{% static 'oca/src/Control.Draw.js' %}"></script>
+<script src="{% static 'oca/src/Tooltip.js' %}"></script>
+<script src="{% static 'oca/src/Toolbar.js' %}"></script>   
+<script src="{% static 'oca/src/draw/DrawToolbar.js' %}"></script>
+<script src="{% static 'oca/src/edit/EditToolbar.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/EditToolbar.Edit.js' %}"></script>
+<script src="{% static 'oca/src/edit/handler/EditToolbar.Delete.js' %}"></script> 
+<script src="{% static 'oca/turf_3.5.1.js' %}" charset="utf-8"></script>     
+<link rel="stylesheet" href="{% static 'oca/style.css' %}" />
+<script>
+   var LeafIcon = L.Icon.extend({
+       options: {
+          iconSize:     [20, 25],
+          shadowSize:   [0, 0],
+          iconAnchor:   [0, 0],
+          shadowAnchor: [0, 0],
+          popupAnchor:  [10, 8]
+       }
+   });
+   
+   var ecole = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/col_01.png' %}"
+   });
+   var hospital = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/csb_01.png' %}"
+   });
+   var pharma = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/pha_01.png' %}"
+   });
+   var bank = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/bank.png' %}"
+   });
+   var rano = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/pom_01.png' %}"
+   });
+   var parking = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/parking.png' %}"
+   });
+   var wc = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/wcp_01.png' %}"
+   });
+   var ordure = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/ordure.png' %}"
+   });
+   var lavoir = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/lavoir.png' %}"
+   });
+   var def = new LeafIcon({
+       iconUrl: "{% static 'oca/icon/marker-icon.png' %}"
+   });
+   
+   var tab = [];var selec = [];
+   
+   function openNav() {
+   	document.getElementById("sideNavigation").style.width = "250px";
+   	document.getElementById("main").style.marginLeft = "250px";
+   	document.body.addEventListener('click', boxCloser, false);
+   	document.getElementById("fixer").style.position = "fixed";
+   }
+    function boxCloser(e){ 
+     if((e.target.id != "sideNavigation") & (e.target.id != "")  & (e.target.parentElement.nodeName != "SECTION")   ){
+        document.body.removeEventListener('click', boxCloser, false);
+        //closeNav();
+     }
+   }
+   function closeNav() {
+       document.getElementById("sideNavigation").style.width = "0";
+       document.getElementById("main").style.marginLeft = "0";
+       document.getElementById("fixer").style.position = "relative";
+   }
+</script>
+<script>
+   $( function() {
+     $(".level").accordion({
+       collapsible: true,heightStyle: "content"
+     });
+     $('.bouton').find('span').remove()
+   } );
+   
+</script>
+<div id="conteneur">
+   <div id="sideNavigation" class="sidenav">
+      <div id="fixer">
+         <a href="javascript:void(0)" id="close" class="closebtn" onclick="closeNav()">&times;</a><br><br>
+         <div class='pat-bouton' onclick="tout()" ><i class="fa fa-check">  </i> Afficher</div>
+         <br>
+         <div class="level" id="largeur">
+            <h3>Largeur route</h3>
+            <div>
+               - X > 3 <span  class="rect-icon" style="background:#2CD100"></span><br>
+               - 3 > X > 2 <span  class="rect-icon" style="background:#0068C9"></span><br>
+               - 2 > X > 1 <span  class="rect-icon" style="background:#35009f"></span><br>
+               - X < 1 <span  class="rect-icon" style="background:#EC0018"></span><br>
+               - X non d&eacute;finie <span  class="rect-icon" style="background:#000"></span><br>
+            </div>
+         </div>
+      </div>
+      <div class="level" id="mobile">
+         <h3>Fokontany <span  class="circle-icon" style="background:#FFF590"></span></h3>
+         <div>
+            <span class="tout"><label><input type="checkbox" name="tout" value="fokontany ">Selectionner tout</label></span><br>
+            {% for fokontany in fkt %}		
+            <label><input type="checkbox" name="fokontany" value="{{ fokontany }}.geojson ">{{ fokontany }}</label><br>
+            {% endfor %}
+         </div>
+         <h3>B&acirc;timents <span  class="circle-icon" style="background:#FF0000"> </span></h3>
+         <div  class="level">
+            <h3>Type de b&acirc;timent</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="building ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="building" value="house">Maison d&apos; habitation</label><br>
+               <label><input type="checkbox" name="building" value="city">Cit&eacute;</label><br>
+               <label><input type="checkbox" name="building" value="apartments">Appartements</label><br>
+               <label><input type="checkbox" name="building" value="Habitation et Magasin">Magasin</label><br>
+               <label><input type="checkbox" name="building" value="Office">Bureau</label><br>
+               <label><input type="checkbox" name="building" value="industrial">B&acirc;timent industriel</label><br>
+               <label><input type="checkbox" name="building" value="school">Ecole</label><br>
+               <label><input type="checkbox" name="building" value="church">Eglise</label><br>
+               <label><input type="checkbox" name="building" value="mosque">Mosqu&eacute;e</label><br>
+               <label><input type="checkbox" name="building" value="public">B&acirc;timent industriel</label><br>
+               <label><input type="checkbox" name="building" value="retail">Commercial</label><br>
+               <label><input type="checkbox" name="building" value="construction">En cours de construction</label><br>
+               <label><input type="checkbox" name="building" value="yes">Autre</label><br>
+            </div>
+            <h3>Mat&eacute;riel de mur</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="building_m ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="building_m" value="brick">Brique</label><br>
+               <label><input type="checkbox" name="building_m" value="wood">Bois</label><br>
+               <label><input type="checkbox" name="building_m" value="concrete">B&eacute;ton</label><br>
+               <label><input type="checkbox" name="building_m" value="metal">M&eacute;tal</label><br>
+               <label><input type="checkbox" name="building_m" value="stone">Pierre</label><br>
+               <label><input type="checkbox" name="building_m" value="terre">Terre</label><br>
+               <label><input type="checkbox" name="building_m" value="NULL">Ind&eacute;termin&eacute;</label><br>	
+            </div>
+            <h3>Mat&eacute;riel de toit</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="building_t ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="building_t" value="roof_tiles">Tuiles</label><br>
+               <label><input type="checkbox" name="building_t" value="concrete">B&eacute;ton</label><br>
+               <label><input type="checkbox" name="building_t" value="metal">M&eacute;tal</label><br>
+               <label><input type="checkbox" name="building_t" value="thatch">Chaume</label><br>
+               <label><input type="checkbox" name="building_t" value="wood">Bois</label><br>
+               <label><input type="checkbox" name="building_t" value="slate">Plaques</label><br>
+            </div>
+            <h3>Nombre d'&eacute;tage</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="building_e ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="building_e" value="0">RDC</label><br>
+               <label><input type="checkbox" name="building_e" value="1">1</label><br>
+               <label><input type="checkbox" name="building_e" value="2">2</label><br>
+               <label><input type="checkbox" name="building_e" value="3">3</label><br>
+               <label><input type="checkbox" name="building_e" value="4">4</label><br>
+               <label><input type="checkbox" name="building_e" value="5">5</label><br>
+               <label><input type="checkbox" name="building_e" value="6">6</label><br>
+               <label><input type="checkbox" name="building_e" value="7">7</label><br>
+            </div>
+            <h3>&Eacute;lectrification</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="lumiere ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="lumiere" value="grid">R&eacute;seau de distribution</label><br>
+               <label><input type="checkbox" name="lumiere" value="solar">Solaire</label><br>	
+               <label><input type="checkbox" name="lumiere" value="generator">Groupe électrogène</label><br>
+               <label><input type="checkbox" name="lumiere" value="none">Aucune</label><br>
+               <label><input type="checkbox" name="lumiere" value="Yes">Oui</label><br>
+            </div>
+         </div>
+         <h3>Infrastructure Pub <span  class="circle-icon" style="background:#0000FF"></span></h3>
+         <div>
+            <span class="tout"><label><input type="checkbox" name="tout" value="school ">Selectionner tout</label></span><br>
+            <label><input type="checkbox" name="school" value="0">Ecole Publique</label><br>
+            <label><input type="checkbox" name="school" value="1">Ecole Prive</label><br>
+            <label><input type="checkbox" name="infra" value="hospital">Hopital</label><br>
+            <label><input type="checkbox" name="infra" value="dispensary">CSB ou dispensaire</label><br>
+            <label><input type="checkbox" name="infra" value="pharmacy">Pharmacie</label><br>
+            <label><input type="checkbox" name="infra" value="medical">Cabinet médical</label><br>
+            <label><input type="checkbox" name="infra" value="bank">Banque</label><br>
+            <label><input type="checkbox" name="infra" value="drinking_water">Borne fontaine</label><br>
+            <label><input type="checkbox" name="infra" value="parking">Parking</label><br>
+            <label><input type="checkbox" name="infra" value="toilets">WC Public</label><br>
+            <label><input type="checkbox" name="infra" value="taxi">Station de taxis</label><br>
+            <label><input type="checkbox" name="infra" value="fuel">Station-service</label><br>
+            <label><input type="checkbox" name="infra" value="lavoir">Lavoir</label><br>
+            <label><input type="checkbox" name="infra" value="ordure">Lieu de depot d'odure</label><br>        
+         </div>
+         <h3>Route</h3>
+         <div  class="level">
+            <h3>Type de chemin</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="route ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="route" value="footway">Chemin am&eacute;nag&eacute; pour pi&eacute;tons</label><br>
+               <label><input type="checkbox" name="route" value="path">Chemin non carossable non sp&eacute;cifique</label><br>
+               <label><input type="checkbox" name="route" value="track">Piste (carossable)</label><br>
+               <label><input type="checkbox" name="route" value="pedestrian">Rue pi&eacute;tonne</label><br>	
+               <label><input type="checkbox" name="route" value="residential">Rue r&eacute;sidentielle</label><br>
+               <label><input type="checkbox" name="route" value="secondary">Rue secondaire</label><br>
+               <label><input type="checkbox" name="route" value="tertiary">Rue tertiaire</label><br>	
+               <label><input type="checkbox" name="route" value="service">Voie d'acc&egrave;s</label><br>
+               <label><input type="checkbox" name="route" value="unclassified">Route Non class&eacute;</label><br>			
+            </div>
+            <h3>Rev&egrave;tements</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="router ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="router" value="paved">Avec rev&egrave;tement</label><br>
+               <label><input type="checkbox" name="router" value="unpaved">Aucun rev&egrave;tement </label><br>
+               <label><input type="checkbox" name="router" value="concrete">B&eacute;ton</label><br>
+               <label><input type="checkbox" name="router" value="asphalt">Bitume</label><br>			
+               <label><input type="checkbox" name="router" value="wood">Bois </label><br>			
+               <label><input type="checkbox" name="router" value="brick">Brique </label><br>	
+               <label><input type="checkbox" name="router" value="cobblestone">Pav&eacute;s </label><br>
+               <label><input type="checkbox" name="router" value="paving_stones">Pavés tr&egrave;s r&eacute;guliers</label><br>			
+               <label><input type="checkbox" name="router" value="gravel">Gravier </label><br>	
+               <label><input type="checkbox" name="router" value="ground">Sol</label><br>	
+            </div>
+            <h3>Praticabilit&eacute; par les divers moyens de transports</h3>
+            <div>
+               <span class="tout"><label><input type="checkbox" name="tout" value="routep ">Selectionner tout</label></span><br>
+               <label><input type="checkbox" name="routep" value="impassable">Aucun v&eacute;hicule à roue ne peut passer </label><br>
+               <label><input type="checkbox" name="routep" value="excellent">Roller blade et Skate board </label><br>
+               <label><input type="checkbox" name="routep" value="very_horrible">Tracteurs - Quad - Moto Trial</label><br>
+               <label><input type="checkbox" name="routep" value="good">V&eacute;lo de course</label><br>
+               <label><input type="checkbox" name="routep" value="intermediate">V&eacute;lo de ville - Voitures rabaiss&eacute;es - scooter</label><br>
+               <label><input type="checkbox" name="routep" value="bad">V&eacute;lo tout chemin et Voitures classiques</label><br>
+               <label><input type="checkbox" name="routep" value="horrible">Voitures 4x4 spéciale hors-terrain et VTT</label><br>
+               <label><input type="checkbox" name="routep" value="very_bad">Voitures sur-&eacute;lev&eacute;es</label><br>
+            </div>
+         </div>
+         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	  
+      </div>
+   </div>
+   <div class="topnav"  id="menu" >
+      <a href="#" onclick="openNav()" >
+         <svg width="17" height="17" >
+            <path d="M0,5 30,5" stroke="#000" stroke-width="3"/>
+            <path d="M0,10 30,10" stroke="#000" stroke-width="3"/>
+            <path d="M0,15 30,15" stroke="#000" stroke-width="3"/>
+         </svg>
+      </a>
+   </div>
+   <div id="main">
+      <div id="map"></div>
+   </div>
+</div>
+<script>
+   $('input[name=tout]').change(function(){
+   	var c=true;
+   	if($(this).is(':checked')) {
+   		c=true;
+   	}else{
+   		c=false;
+   	}
+   	nom=$(this).val();
+   	$.each($("input[name="+nom+"]"), function() { 
+   		//$(this).check=c;
+   		$(this).prop('checked', c);
+   	})
+   });
+   
+   function tout(){
+   execute();
+   infra();
+   route();
+   }
+   function execute(){
+   	tab = [];men=[];hom=[];fem=[];enf=[];
+   	tableau=[];  
+   	vider();
+   	fkt();
+   }
+   var poly;
+   //var fkt={}; -18.9168, 47.5046 //center: [-18.9163982, 47.5186375],
+     var map = L.map('map',{
+      center: [-18.9181, 47.5085],
+      zoom: 17
+      });
+   //var map = L.map('map').setView([-18.9163982, 47.5186375], 15);
+   //var layersControl = L.control.layers().addTo(map);
+   
+   
+      L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+   //chargement===========================================
+   function fkt(){
+   var lalana= "{% static 'oca/fokontany/' %}";
+   var p='';var a=false;//tab['titre']=[];
+   $.each($("input[name='fokontany']"), function() { 
+   	enlever($(this).parent().text().trim(),$(this).parent().text().trim());
+   	 if($(this).is(':checked')) { var ID=$(this).parent().text().trim();
+   		$.getJSON(lalana+$(this).val(), function(dataAndav1) { fokontany(dataAndav1, ID ); });
+   		p=p+"<th>"+$(this).parent().text().trim()+"</th>";
+   		//tab['titre'][$(this).parent().text().trim()]=$(this).parent().text().trim();
+   		tableau.push($(this).parent().text().trim());
+   		a=true;
+   	}
+   });
+   if(a){bati();}else{alert("Veuillez cocher les fokotany SVP!");} 
+   //$("#nmb").html(" <table width='100%'  class='blueTable' id='t'><thead><tr><th></th><th></th>"+p+"</tr></thead><tbody id='tbody'></tbody></table>");
+   $("#nmb").html(" <table width='100%'  class='blueTable' id='t'><thead><tr><th></th><th></th>"+p+"</tr></thead><tbody id='tbody'></tbody></table>");
+   }
+   
+   function fokontany(datafkt,nom) { 
+   arrond=L.geoJson( datafkt,
+   {style: function(feature)
+   {   
+   return { color : '#F8C912', weight : 1, fillColor : '#FFF590', fillOpacity : .5 };
+                                  },
+   onEachFeature : function( feature, layer )
+                {layer.layerID = nom;
+   layer.bindPopup( '<b><u>Description</u></b><br><b> Fokontany </b>' + feature.properties.FOKONTANY );
+                  }
+   });
+   map.addLayer(arrond);
+   //map.fitBounds(arrond.getBounds()); 2MQDRMLJTAH
+   map.fitBounds([[-18.9107, 47.5014],[-18.9288, 47.5014],[-18.9107, 47.5165],[-18.9288, 47.5165]]);
+    
+   }
+   //=============================================Fonction entree===============================================================================
+   function entree(){
+   var properties=[],t=[];
+   $.each($("input[name='building']"), function() { 
+   if (this.checked) {
+   	if (properties[0]!=undefined){properties[0]=properties[0]+" || "+"feature.properties.building=='"+$(this).val()+"'";t[0]=t[0]+" , "+$(this).parent().text().trim();}
+   	else{properties[0]="feature.properties.building=='"+$(this).val()+"'";t[0]=$(this).parent().text().trim();}
+   	//chercher='feature.properties.building=="church" && feature.properties.building_m=="brick"'
+   	//nom=nom+$(this).parent().text().trim();		
+   }
+   });
+   $.each($("input[name='building_m']"), function() { 
+   if (this.checked) {
+   	if (properties[1]!=undefined){properties[1]=properties[1]+" || "+"feature.properties.material=='"+$(this).val()+"'";t[1]=t[1]+" , "+$(this).parent().text().trim();}
+   	else{properties[1]="feature.properties.material=='"+$(this).val()+"'";t[1]=$(this).parent().text().trim();}
+   	//nom=nom+$(this).parent().text().trim();
+   }
+   });
+   $.each($("input[name='lumiere']"), function() { 
+   if (this.checked) {
+   	if (properties[2]!=undefined){properties[2]=properties[2]+" || "+"feature.properties.se=='"+$(this).val()+"'";t[2]=t[2]+" , "+$(this).parent().text().trim();}
+   	else{properties[2]="feature.properties.se=='"+$(this).val()+"'";t[2]=$(this).parent().text().trim();}
+   	//nom=nom+$(this).parent().text().trim();
+   }
+   });
+   $.each($("input[name='building_t']"), function() { 
+   if (this.checked) {
+   	if (properties[3]!=undefined){properties[3]=properties[3]+" || "+"feature.properties.toit=='"+$(this).val()+"'";t[3]=t[3]+" , "+$(this).parent().text().trim();}
+   	else{properties[3]="feature.properties.toit=='"+$(this).val()+"'";t[3]=$(this).parent().text().trim();}
+   	//nom=nom+$(this).parent().text().trim();
+   }
+   });
+   $.each($("input[name='building_e']"), function() { 
+   if (this.checked) {
+   	if (properties[4]!=undefined){properties[4]=properties[4]+" || "+"feature.properties.etage=='"+$(this).val()+"'";t[4]=t[4]+" , "+$(this).parent().text().trim();}
+   	else{properties[4]="feature.properties.etage=='"+$(this).val()+"'";t[4]=$(this).parent().text().trim();}
+   	//nom=nom+$(this).parent().text().trim();
+   }
+   });
+   if (properties.lenght>1){ 
+   properties.forEach(function(item, index, array) {
+   	if (properties[index]!=undefined){properties[index]="("+properties[index]+")";};
+   });
+   }
+   var search="";nom="";
+   if (properties[0]!=undefined){search=properties[0];nom=t[0];}
+   if (properties[1]!=undefined){if (search!=""){search=search+" && "+properties[1];}else {search=properties[1];}nom=nom+" <br>en "+t[1];}
+   if (properties[2]!=undefined){if (search!=""){search=search+" && "+properties[2];}else {search=properties[2];}nom=nom+" <br>(S.E="+t[2]+")";}
+   if (properties[3]!=undefined){if (search!=""){search=search+" && "+properties[3];}else {search=properties[3];}nom=nom+" <br>(toit="+t[3]+")";}
+   if (properties[4]!=undefined){if (search!=""){search=search+" && "+properties[4];}else {search=properties[4];}nom=nom+" <br>(etage="+t[4]+")";}
+   return [search,nom];
+   }
+   //=============================================Fonction BATI===============================================================================
+   
+   function bati(){
+   var a=entree();
+   var search,nom;search=a[0];nom=a[1];
+    enlever('','Batis');
+    //if (search==""){ search=true;}//Afficher tout si rien est coché
+   var bati_path= "{% static 'oca/bati/' %}";	
+   var no="Batis";var te="Batis";	 
+   col='#FF0000';
+   var dfr=[];
+   $.each($("input[name='fokontany']"), function() { 
+   	if($(this).is(':checked')) {  
+   		dfr.push($.getJSON(bati_path+$(this).val(), function(dataAndav1) {delay:1 , parambat(dataAndav1,no,te,search,col); }) );
+   	}
+   });  
+   $.when.apply($, dfr).done(function(){
+   	afficher("Batis",nom);
+   });
+   
+   }
+   //fichier====================================================================================================================
+   
+   var n=0;
+   function parambat(datadet,nom,texte,chercher,couleur) { //console.log("nom="+nom+" texte=" +texte+" chercher ="+chercher);
+   var homme=0;var femme=0;var enfant=0;var menage=0;
+   det=L.geoJson( datadet,
+   {style: function(feature)
+   {     
+   return { color : couleur, weight : 1, fillColor : couleur, fillOpacity : .6};
+       },	
+   onEachFeature : function( feature, layer )
+                {
+   		  layer.layerID = nom;	layer.texte=texte ;	
+   var donnee="";
+   {% if user.is_superuser or user.is_staff %}
+   if (Number.isInteger(feature.properties.nmb_hom)){homme=homme+feature.properties.nmb_hom;}
+   if (Number.isInteger(feature.properties.nmb_fem)){femme=femme+feature.properties.nmb_fem;}
+   if (Number.isInteger(feature.properties.nmb_enf)){enfant=enfant+feature.properties.nmb_enf;}
+   if (Number.isInteger(feature.properties.nmb_men)){menage=menage+feature.properties.nmb_men;}
+   {% endif %}
+   if((feature.properties.building!="") && (feature.properties.building!=null)){donnee=donnee+"<br><b> Type: </b>"+feature.properties.building+"<br>"};
+   if((feature.properties.material!="")&&(feature.properties.material!=null)){donnee=donnee+"<br><b> Mat&eacute;riel: </b>"+feature.properties.material+"<br>"};
+   if((feature.properties.toit!="")&&(feature.properties.toit!=null)){donnee=donnee+"<br><b> Toit: </b>"+feature.properties.toit+"<br>"};
+   if((feature.properties.se!="")&&(feature.properties.se!=null)){donnee=donnee+"<br><b> Electrification: </b>"+feature.properties.se+"<br>"};
+   if((feature.properties.etage!="")&&(feature.properties.etage!=null)){donnee=donnee+"<br><b> Nmb Etage: </b>"+feature.properties.etage+"<br>"};
+   {% if user.is_superuser or user.is_staff %}
+   if((feature.properties.nmb_men!="")&&(feature.properties.nmb_men!=null)){donnee=donnee+"<br><b> Menage: </b>"+feature.properties.nmb_men+"<br>"};
+   if((feature.properties.nmb_hom!="")&&(feature.properties.nmb_hom!=null)){donnee=donnee+"<br><b> Homme: </b>"+feature.properties.nmb_hom+"<br>"};
+   if((feature.properties.nmb_fem!="")&&(feature.properties.nmb_fem!=null)){donnee=donnee+"<br><b> Femme: </b>"+feature.properties.nmb_fem+"<br>"};
+   if((feature.properties.nmb_enf!="")&&(feature.properties.nmb_enf!=null)){donnee=donnee+"<br><b> Enfant: </b>"+feature.properties.nmb_enf+"<br>"};
+   {% endif %}
+   if((feature.properties.cuisson!="")&&(feature.properties.cuisson!=null)){donnee=donnee+"<br><b> Cuisson: </b>"+feature.properties.cuisson+"<br>"};
+   if (donnee!=""){	layer.bindPopup( '<b><u>Description</u></b><br>'+donnee);}else{layer.bindPopup( '<b><u>Pas de donn&eacute;e</u></b><br>');}
+            },
+    filter: function(feature) {
+   	return eval(chercher);
+   }		  
+   }
+   );		
+   tab[datadet.name]=det.getLayers().length; 
+   men[datadet.name]=menage; 
+   hom[datadet.name]=homme; 
+   fem[datadet.name]=femme; 
+   enf[datadet.name]=enfant; 
+   map.addLayer(det);
+   }
+   
+   
+   function afficher(ID,nom){
+   var ta='',h='',f='',e='',m='';
+   //$("#nmb").html(" <table width='100%'  class='blueTable' id='t'><thead><tr><th></th>"+p+"</tr></thead><tbody id='tbody'></tbody></table>");
+   if(! $('#'+ID+''). length){ 
+   	//$('#t>tbody:last').append('<tr id=\"'+ID+'\"><td>'+ID+'</td>'+ta+'</tr>');
+   	$('#t').append('<tbody id=\"'+ID+'\"></tbody>');
+   }
+   {% if user.is_superuser or user.is_staff %}
+   ta='<td rowspan="5">BATIMENTS<br>'+nom+'</td><td>Batis</td>';
+   {% else %}
+   ta='<td>BATIMENTS<br>'+nom+'</td><td>Batis</td>';
+   {% endif %}
+   //for (var val in tab) {
+   //	ta = ta.concat('<td>'+tab[val]+'</td>');
+   //}; 
+   tableau.forEach(function(item, index, array) {
+   	ta = ta.concat('<td>'+tab[item]+'</td>'); 		
+   {% if user.is_superuser or user.is_staff %}
+   	h=h.concat('<td>'+hom[item]+'</td>'); 
+   	f=f.concat('<td>'+fem[item]+'</td>'); 
+   	e=e.concat('<td>'+enf[item]+'</td>'); 
+   	m=m.concat('<td>'+men[item]+'</td>'); 
+   {% endif %}
+   });	
+   //$('#'+ID).html(ta);
+   $('#'+ID).append('<tr>'+ta+'</tr>');
+   {% if user.is_superuser or user.is_staff %}
+   $('#'+ID).append('<tr><td>Menages</td>'+m+'</tr>');
+   $('#'+ID).append('<tr><td>Hommes</td>'+h+'</tr>');
+   $('#'+ID).append('<tr><td>Femmes</td>'+f+'</tr>');
+   $('#'+ID).append('<tr><td>Enfants</td>'+e+'</tr>');
+   {% endif %}
+   }
+   
+   
+   function enlever(ID,nom){
+    map.eachLayer(function(layer) {
+      if (layer.layerID === nom) {
+          map.removeLayer(layer);
+      }	
+    }); 
+    if (nom) $('#'+nom+'').remove();
+   }
+   function afficherS(){
+   var ta='';
+   for(var clef in selec){
+   	//ta=ta+' '+clef+' = '+selec[clef]+'</br>';
+   	ta=ta+'<tr><td>'+clef+'</td><td>'+selec[clef]+'</td></tr>';
+   }
+   
+   //$('#det').html(ta);
+   $('#det').html(" <table width='100%'  class='blueTable' id='td'><thead><tr><th>Designation</th><th>Nombre</th></tr></thead><tbody id='tbody'>"+ta+"</tbody></table>");
+   //console.log(ta);
+   }
+   
+   function vider(){	
+   map.eachLayer(function(layer){
+   	if(layer.layerID!=undefined){enlever('',layer.layerID);}
+   });
+   }
+   
+   //=========================================SELECTION====================================================
+   function selectionp() {
+   var a=entree();
+   var search,nom;search=a[0];nom=a[1];
+   tab = [];men=[];hom=[];fem=[];enf=[];
+   	tableau=[];
+   if (search==""){ search=true;}
+   var bati_path= "{% static 'oca/bati/' %}";
+   var dfr=[];
+      {% for ba in bati %}
+   	dfr.push($.getJSON(bati_path+"{{ ba }}", function(dataAndav1) {delay:1 , paramfiltre(dataAndav1,poly,search,nom); }) 
+   		.done(function(d) { 
+   			tableau.push(d.name);
+   		})
+   	);		
+   {% endfor %}
+   $.when.apply($, dfr).done(function(){ 
+   	var p='';
+   	tableau.forEach(function(item, index, array) {
+   		p=p+"<th>"+item+"</th>";
+   	});	
+   	$("#nmb").html(" <table width='100%'  class='blueTable' id='t'><thead><tr><th></th><th></th>"+p+"</tr></thead><tbody id='tbody'></tbody></table>");
+   	afficher("Selection",nom);
+   });
+   }
+   
+   var n=0;var i=0;
+   function paramfiltre(datadet,poly,search,nom) {
+   var intersection;var a;
+   var homme=0;var femme=0;var enfant=0;var menage=0;
+   
+   
+   det=L.geoJson( datadet,
+   {style: function(feature)
+   {    
+   return { color : '#2800F2', weight : 1, fillColor : '#0065F2', fillOpacity : .6 };
+       },	
+   filter: function(feature) {intersection = turf.intersect(poly,feature);
+          if ((intersection !== undefined) && (intersection !== null)){if (search!=''){;return eval(search);}else {return true;} } else return false;
+              },
+   onEachFeature : function( feature, layer )
+                {  
+   			layer.layerID = 'Selection';
+   var donnee="";
+   if (Number.isInteger(feature.properties.nmb_hom)){homme=homme+feature.properties.nmb_hom;}
+   if (Number.isInteger(feature.properties.nmb_fem)){femme=femme+feature.properties.nmb_fem;}
+   if (Number.isInteger(feature.properties.nmb_enf)){enfant=enfant+feature.properties.nmb_enf;}
+   if (Number.isInteger(feature.properties.nmb_men)){menage=menage+feature.properties.nmb_men;}
+   if((feature.properties.building!="") && (feature.properties.building!=null)){donnee=donnee+"<br><b> Type: </b>"+feature.properties.building+"<br>"};
+   if((feature.properties.material!="")&&(feature.properties.material!=null)){donnee=donnee+"<br><b> Mat&eacute;riel: </b>"+feature.properties.material+"<br>"};
+   if((feature.properties.toit!="")&&(feature.properties.toit!=null)){donnee=donnee+"<br><b> Toit: </b>"+feature.properties.toit+"<br>"};
+   if((feature.properties.se!="")&&(feature.properties.se!=null)){donnee=donnee+"<br><b> Electrification: </b>"+feature.properties.se+"<br>"};
+   if((feature.properties.etage!="")&&(feature.properties.etage!=null)){donnee=donnee+"<br><b> Nmb Etage: </b>"+feature.properties.etage+"<br>"};
+   if((feature.properties.nmb_men!="")&&(feature.properties.nmb_men!=null)){donnee=donnee+"<br><b> Menage: </b>"+feature.properties.nmb_men+"<br>"};
+   if((feature.properties.nmb_hom!="")&&(feature.properties.nmb_hom!=null)){donnee=donnee+"<br><b> Homme: </b>"+feature.properties.nmb_hom+"<br>"};
+   if((feature.properties.nmb_fem!="")&&(feature.properties.nmb_fem!=null)){donnee=donnee+"<br><b> Femme: </b>"+feature.properties.nmb_fem+"<br>"};
+   if((feature.properties.nmb_enf!="")&&(feature.properties.nmb_enf!=null)){donnee=donnee+"<br><b> Enfant: </b>"+feature.properties.nmb_enf+"<br>"};
+   if((feature.properties.cuisson!="")&&(feature.properties.cuisson!=null)){donnee=donnee+"<br><b> Cuisson: </b>"+feature.properties.cuisson+"<br>"};
+   if (donnee!=""){	layer.bindPopup( '<b><u>Description</u></b><br>'+donnee);}else{layer.bindPopup( '<b><u>Pas de donn&eacute;e</u></b><br>');}
+            }
+   }
+   );	
+   tab[datadet.name]=det.getLayers().length; //console.log(datadet.name+" = "+det.getLayers().length);
+   men[datadet.name]=menage; 
+   hom[datadet.name]=homme; 
+   fem[datadet.name]=femme; 
+   enf[datadet.name]=enfant; 	
+   
+   map.addLayer(det);	
+   }
+   
+   var drawnItems = new L.FeatureGroup();
+      map.addLayer(drawnItems);
+   
+      // Set the title to show on the polygon button
+      L.drawLocal.draw.toolbar.buttons.polygon = 'Selection';
+   /*    var drawControl = new L.Control.Draw({
+          draw: {
+              polyline: false,
+              polygon: true,
+   		rectangle:false,
+   		circlemarker:false,
+              circle: false,
+              marker: false
+          },
+          edit: {
+              featureGroup: drawnItems,
+              remove: true,
+   		edit:false
+          }
+      });
+   */
+     L.drawLocal.draw.handlers.polygon.tooltip.start = 'Cliquez pour commencer';
+     L.drawLocal.draw.toolbar.finish.text = 'Terminer';
+     L.drawLocal.draw.toolbar.actions.text = 'Annuler';
+     L.drawLocal.draw.toolbar.undo.text = 'Effacer le dernier point';
+     
+     L.drawLocal.edit.toolbar.actions.cancel.text='Annuler';
+     L.drawLocal.edit.toolbar.actions.clearAll.text='Tout effacer';
+     L.drawLocal.edit.toolbar.actions.save.text='-';L.drawLocal.edit.toolbar.actions.save.title='-';
+   /*L.EditToolbar.Delete.include({
+      removeAllLayers: false
+   });*/
+     var drawControl = new L.Control.Draw({
+          draw: {
+              polyline: false,
+              polygon: true,
+   		rectangle:false,
+   		circlemarker:false,
+              circle: false,
+              marker: false
+          },
+          edit: {
+              featureGroup: drawnItems,
+   		edit:false,
+              remove:true
+          }
+      });	
+   
+      map.addControl(drawControl);
+   
+      map.on(L.Draw.Event.CREATED, function (e) {
+          var type = e.layerType,
+                  layer = e.layer;layer.layerID="Selection";
+   //console.log(JSON.stringify(e.layer.getLatLngs())); console.log(layer.toGeoJSON().geometry.coordinates[0]);
+   			poly=layer.toGeoJSON();			
+          if (type === 'polygon') {
+              layer.bindPopup('A popup!');
+          }        
+   	vider();
+          drawnItems.addLayer(layer);
+   	selectionp();
+      });
+   
+      map.on(L.Draw.Event.EDITED, function (e) {
+          var layers = e.layers;layer.layerID="Selection";
+          var countOfEditedLayers = 0;
+          layers.eachLayer(function (layer) {
+              countOfEditedLayers++;
+   		//console.log(e);
+          });
+          //console.log("Edited " + countOfEditedLayers + " layers");
+   	
+   	selectionp();
+      });
+   map.on(L.Draw.Event.DELETED, function (e) {
+   	enlever('Selection','Selection');
+   	$('#det').empty();
+      });	      
+</script>
+<script>
+   function fkt_route(){
+   	var lalana= "{% static 'oca/fokontany/' %}";
+   	var p='';
+   	$.each($("input[name='fokontany']"), function() { 
+   		enlever($(this).parent().text().trim(),$(this).parent().text().trim());
+   		 var ID=$(this).parent().text().trim();
+   		$.getJSON(lalana+$(this).val(), function(dataAndav1) { fokontany(dataAndav1, ID ); });
+   	});
+   }
+   function route(){
+   	vider();//$('.blueTable').remove();//Enlever le tableau
+   	//fkt_route();
+   	var chercher=entree_route();var te="route";
+   	var route_path= "{% static 'oca/route/' %}";
+   	$.getJSON(route_path+"route.geojson", function(data) {paramr(data,chercher[1],te,chercher[0]); })
+   		.done(function() { 
+   			
+   		})
+   		.always(function() {});
+   		
+   }
+   //=============================================Fonction entree route===============================================================================
+   function entree_route(){
+   	var prop=[],tar=[];var i=0;
+   $.each($("input[name='route']"), function() { 
+   	if (this.checked) { i=1;
+   		if (prop[0]!=undefined){prop[0]=prop[0]+" || "+"feature.properties.highway=='"+$(this).val()+"'";tar[0]=tar[0]+" , "+$(this).parent().text().trim();}
+   		else{prop[0]="feature.properties.highway=='"+$(this).val()+"'";tar[0]=$(this).parent().text().trim();}
+   	}
+   });
+   $.each($("input[name='router']"), function() { 
+   	if (this.checked) {i=1;
+   		if (prop[1]!=undefined){prop[1]=prop[1]+" || "+"feature.properties.suface=='"+$(this).val()+"'";tar[1]=tar[1]+" , "+$(this).parent().text().trim();}
+   		else{prop[1]="feature.properties.surface=='"+$(this).val()+"'";tar[1]=$(this).parent().text().trim();}
+   		//nom=nom+$(this).parent().text().trim();
+   	}
+   });
+   $.each($("input[name='routep']"), function() { 
+   	if (this.checked) {i=1;
+   		if (prop[2]!=undefined){prop[2]=prop[2]+" || "+"feature.properties.smoothness=='"+$(this).val()+"'";tar[2]=tar[2]+" , "+$(this).parent().text().trim();}
+   		else{prop[2]="feature.properties.smoothness=='"+$(this).val()+"'";tar[2]=$(this).parent().text().trim();}
+   		//nom=nom+$(this).parent().text().trim();
+   	}
+   });
+   if (prop.lenght>1){ 
+   	prop.forEach(function(item, index, array) {
+   		if (prop[index]!=undefined){prop[index]="("+prop[index]+")";};
+   });
+   }
+   if (i==0)
+   	{
+       document.getElementById("largeur").style.display = "none";
+       document.getElementById("mobile").style.top = "90px";
+       document.getElementById("fixer").style.height = "85px";
+       }else{
+   	document.getElementById("largeur").style.display = "block";
+       document.getElementById("mobile").style.top = "240px";
+       document.getElementById("fixer").style.height = "185px";
+   	}
+   var searchr="";nomr="";
+   //if (searchr==""){ searchr=true;}//Afficher toutes les routes si rien est coché
+   if (prop[0]!=undefined){searchr=prop[0];nom=tar[0];}
+   if (prop[1]!=undefined){if (searchr!=""){searchr=searchr+" && "+prop[1];}else {searchr=prop[1];}nomr=nomr+" <br>en "+tar[1];}
+   if (prop[2]!=undefined){if (searchr!=""){searchr=searchr+" && "+prop[2];}else {searchr=prop[2];}nomr=nomr+" <br>(S.E="+tar[2]+")";}
+   return [searchr,nomr];
+   }
+   //=============================================Fonction param route===============================================================================
+   function paramr(datadet,nom,texte,chercher) { //console.log(datadet);
+   	var coul="",gras=1,j;
+   det=L.geoJson( datadet,
+   	{	 
+   	onEachFeature : function( feature, layer )
+   			{
+   			layer.layerID = "Route";var valeur="";
+   			switch (feature.properties.highway) {
+   				case 'footway':
+   					valeur=valeur+"<b>Type :</b>Chemin am&eacute;nag&eacute; pour pi&eacute;tons<br>";
+   					break;
+   				case 'path':
+   					valeur=valeur+"<b>Type :</b>Chemin non carossable non sp&eacute;cifique<br>";
+   					break;
+   				case 'track':
+   					valeur=valeur+"<b>Type :</b>Piste (carossable)<br>";
+   					break;
+   				case 'pedestrian':
+   					valeur=valeur+"<b>Type :</b>Rue pi&eacute;tonne<br>";
+   					break;
+   				case 'residential':
+   					valeur=valeur+"<b>Type :</b>Rue r&eacute;sidentielle<br>";
+   					break;
+   				case 'secondary':
+   					valeur=valeur+"<b>Type :</b>Rue secondaire<br>";
+   					break;
+   				case 'tertiary':
+   					valeur=valeur+"<b>Type :</b>Rue tertiaire<br>";
+   					break;
+   				case 'service':
+   					valeur=valeur+"<b>Type :</b>Voie d'acc&egrave;s<br>";
+   					break;
+   				case 'unclassified':
+   					valeur=valeur+"<b>Type :</b>Route Non class&eacute;<br>";
+   					break;
+   				default:
+   					valeur=valeur+"<b>Type :</b>Route Non class&eacute;<br>";
+   				}
+   				
+   			switch (feature.properties.surface) {
+   				case 'paved':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Avec rev&egrave;tement<br>";
+   					break;
+   				case 'unpaved':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Aucun rev&egrave;tement<br>";
+   					break;
+   				case 'concrete':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>B&eacute;ton<br>";
+   					break;
+   				case 'asphalt':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Bitume<br>";
+   					break;
+   				case 'wood':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Bois<br>";
+   					break;
+   				case 'brick':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Brique<br>";
+   					break;
+   				case 'cobblestone':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Pav&eacute;s<br>";
+   					break;
+   				case 'paving_stones':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Pav&eacute;s tr&egrave;s r&eacute;guliers<br>";
+   					break;
+   				case 'gravel':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Gravier<br>";
+   					break;
+   				case 'ground':
+   					valeur=valeur+"<b>Rev&egrave;tements :</b>Sol<br>";
+   					break;
+   				}
+   			
+   			switch (feature.properties.smoothness) {
+   				case 'impassable':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>Aucun v&eacute;hicule à roue ne peut passer<br>";
+   					break;
+   				case 'excellent':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>Roller blade et Skate board<br>";
+   					break;
+   				case 'very_horrible':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>Tracteurs - Quad - Moto Trial<br>";
+   					break;
+   				case 'good':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>V&eacute;lo de course<br>";
+   					break;
+   				case 'intermediate':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>V&eacute;lo de ville - Voitures rabaiss&eacute;es - scooter<br>";
+   					break;
+   				case 'bad':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>V&eacute;lo tout chemin et Voitures classiques<br>";
+   					break;
+   				case 'horrible':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>Voitures 4x4 spéciale hors-terrain et VTT<br>";
+   					break;
+   				case 'very_bad':
+   					valeur=valeur+"<b>Praticabilit&eacute; :</b>Voitures sur-&eacute;lev&eacute;es<br>";
+   					break;
+   				}
+   				
+   				if (feature.properties.width){valeur=valeur+'<b>Largeur : </b>'+feature.properties.width+' m<br>';}
+   				
+   				switch (feature.properties.oneway) {
+   				case 'no':
+   					valeur=valeur+"<b>Sens unique :</b> Non<br>";
+   					break;
+   				case 'yes':
+   					valeur=valeur+"<b>Sens unique :</b> Oui<br>";
+   					break;
+   				}
+   			layer.bindPopup( valeur);
+   			},
+   	style: function(feature)
+   	{ 	j = parseFloat(feature.properties.width);
+   			switch (true) {
+               case (j<=1):
+                   coul='#EC0018';gras=4;
+                   break;
+               case (j<=2):
+                   coul='#35009f';gras=4;//FB4600
+                   break;
+               case (j<=3):
+                   coul='#0068C9';gras=4;
+                   break;
+               case (j>3):
+                   coul='#2CD100';gras=4;
+                   break;
+               default:
+                   coul='#212121';gras=4;
+   			}
+   			return { color :coul, weight : gras, fillColor : coul, fillOpacity : 1};
+       },
+       filter: function(feature) {
+   		if (true) 
+   		{ 
+   			return eval(chercher);} 
+   		else 
+   		{
+   			return true;
+   		}
+   	}
+   });		
+   //tab[datadet.name]=det.getLayers().length;
+   	map.addLayer(det);
+   }
+</script>
+<script>
+   //Infrastruture====================================================================================================================
+   function infra(){
+   	vider();//$('.blueTable').remove();//Enlever le tableau
+   	//fkt_infra();
+   	var bati_path= "{% static 'oca/fokontany/' %}";	
+   	var chercher=infra_entre();var te="infrastructure";
+   	if (chercher==","){//alert("Veuillez selectionner l'infrastructure à afficher SVP!");
+   	}else{
+   	var route_path= "{% static 'oca/infra/' %}";
+   	/*$.getJSON(route_path+"infrastructure.geojson", function(data) {paraminfra(data,chercher[1],te,chercher[0]); })
+   		.done(function() { 			
+   		})
+   		.always(function() {});*/
+   		//DEBUT
+   		var geo;
+   		$.each($("input[name='fokontany']"), function() { 
+   		if($(this).is(':checked')) {  
+   			$.getJSON(bati_path+$(this).val(), function(datas) {geo=L.geoJson( datas,{});
+   				 //geo= new L.GeoJSON.AJAX(bati_path+$(this).val());
+   				})
+   			.done(function() { 
+   				$.getJSON(route_path+"infrastructure.geojson", function(data) {paraminfra(data,chercher[1],te,chercher[0],geo); });
+   			});
+   		} 
+   	});
+   		
+   		
+   		//farany
+   		
+   	}
+   }
+   function fkt_infra(){
+   	var lalana= "{% static 'oca/fokontany/' %}";
+   	var p='';
+   	$.each($("input[name='fokontany']"), function() { a=true;
+   		enlever($(this).parent().text().trim(),$(this).parent().text().trim());
+   		 var ID=$(this).parent().text().trim();
+   		$.getJSON(lalana+$(this).val(), function(dataAndav1) { fokontany(dataAndav1, ID ); });
+   	});
+   }
+   function infra_entre(){
+   	var pr=[],tari=[];
+   	$.each($("input[name='infra']"), function() { 
+   	if (this.checked) {
+   		if (pr[0]!=undefined){pr[0]=pr[0]+" || "+"feature.properties.amenity=='"+$(this).val()+"'";tari[0]=tari[0]+" , "+$(this).parent().text().trim();}
+   		else{pr[0]="feature.properties.amenity=='"+$(this).val()+"'";tari[0]=$(this).parent().text().trim();}
+   	}
+   	});
+   	
+   	$.each($("input[name='school']"), function() { 
+   	if (this.checked) {
+   		if (pr[0]!=undefined){pr[0]=pr[0]+" || "+"((feature.properties.amenity=='school') && (feature.properties.e_type=='"+$(this).val()+"'))";tari[0]=tari[0]+" , "+$(this).parent().text().trim();}
+   		else{pr[0]="((feature.properties.amenity=='school') && (feature.properties.e_type=='"+$(this).val()+"'))";tari[0]=$(this).parent().text().trim();}
+   	}
+   	});
+   	return [pr[0],tari[0]];
+   }
+   function paraminfra(datadet,nom,texte,chercher,geo) { 
+   	var coul="",gras=1 ;var intersection;
+   det=L.geoJson( datadet,
+   	{
+   	onEachFeature : function( feature, layer )
+   			{
+   			layer.layerID = "Infrastructure";var valeur="";
+   			if (feature.properties.name){valeur=valeur+'<b>'+feature.properties.name+'</b><br>';}
+   			switch (feature.properties.amenity) {
+   				case 'school':
+   					if (feature.properties.e_type=0)
+   						valeur=valeur+"<b>Service :</b>Ecole publique<br>";
+   					else valeur=valeur+"<b>Service :</b>Ecole prive<br>";
+   					break;
+   				case 'hospital':
+   					valeur=valeur+"<b>Service :</b>Hôpital<br>";
+   					break;
+   				case 'dispensary':
+   					valeur=valeur+"<b>Service :</b>CBS<br>";
+   					break;
+   				case 'pharmacy':
+   					valeur=valeur+"<b>Service :</b>Pharmacie<br>";
+   					break;
+   				case 'bank':
+   					valeur=valeur+"<b>Service :</b>Banque<br>";
+   					break;
+   				case 'drinking_water':
+   					valeur=valeur+"<b>Service :</b>Borne fontaine<br>";
+   					break;
+   				case 'parking':
+   					valeur=valeur+"<b>Service :</b>Parking<br>";
+   					break;
+   				case 'toilets':
+   					valeur=valeur+"<b>Service :</b>WC public<br>";
+   					break;
+   				case 'fuel':
+   					valeur=valeur+"<b>Type :</b>Station-service<br>";
+   					break;
+   				case 'lavoir':
+   					valeur=valeur+"<b>Service :</b>Lavoir<br>";
+   					break;
+   				default:
+   					valeur=valeur;
+   				}				
+   				if (feature.properties.e_eleves){valeur=valeur+'<b>Eleves : </b>'+feature.properties.e_eleves+' <br>';}
+   				if (feature.properties.e_enseig){valeur=valeur+'<b>Enseignnants : </b>'+feature.properties.e_enseig+' <br>';}
+   				if (feature.properties.e_bat){valeur=valeur+'<b>Batiment : </b>'+feature.properties.e_bat+' <br>';}
+   				if (feature.properties.e_salle){valeur=valeur+'<b>Salles : </b>'+feature.properties.e_salle+' <br>';}
+   				if (feature.properties.e_moy_eleve){valeur=valeur+'<b>Nmb moy Eleves : </b>'+feature.properties.e_moy_eleve+' <br>';}
+   				if (feature.properties.e_table){valeur=valeur+'<b>Tables : </b>'+feature.properties.e_table+' <br>';}
+   				
+   				if (feature.properties.toilets){valeur=valeur+'<b>Toilette : </b>'+feature.properties.toilets+' <br>';}
+   				if (feature.properties.state){valeur=valeur+'<b>Etat : </b>'+feature.properties.state+' <br>';}
+   				if (feature.properties.light){valeur=valeur+'<b>Eclairage : </b>'+feature.properties.light+' <br>';}
+   				
+   				if (feature.properties.s_Sevice){valeur=valeur+'<b>Service : </b>'+feature.properties.s_Sevice+' <br>';}
+   				if (feature.properties.s_personnel){valeur=valeur+'<b>Personnels : </b>'+feature.properties.s_personnel+' <br>';}
+   				if (feature.properties.s_salles){valeur=valeur+'<b>Salles : </b>'+feature.properties.s_salles+' <br>';}
+   				if (feature.properties.s_lits){valeur=valeur+'<b>Lits : </b>'+feature.properties.s_lits+' <br>';}
+   				if (feature.properties.s_ambulance){valeur=valeur+'<b>Ambulances : </b>'+feature.properties.s_ambulance+' <br>';}
+   			
+   			layer.bindPopup( valeur);
+   			},
+   	pointToLayer: function (feature, latlng) {var ico="";
+   		switch (feature.properties.amenity) {
+   				case 'school':
+   					ico=ecole;
+   					break;
+   				case 'hospital':
+   					ico=hospital;
+   					break;
+   				case 'dispensary':
+   					ico=hospital;
+   					break;
+   				case 'pharmacy':
+   					ico=pharma;
+   					break;
+   				case 'bank':
+   					ico=bank;
+   					break;
+   				case 'drinking_water':
+   					ico=rano;
+   					break;
+   				case 'parking':
+   					ico=parking;
+   					break;
+   				case 'toilets':
+   					ico=wc;
+   					break;
+   				case 'fuel':
+   					ico=def;
+   					break;
+   				case 'lavoir':
+   					ico=lavoir;
+   					break;
+   				default:
+   					ico=def;
+   				}
+   		return L.marker(latlng, {icon: ico});
+       },
+   	style: function(feature)
+   	{
+   			coul='#0000FF';gras=4;
+   			return { color :coul, weight : gras, fillColor : coul, fillOpacity : 1};
+       },
+       filter: function(feature) {//console.log(feature.geometry.coordinates[0]);var point=turf.point([47.5084897, -18.9133706]);
+   		//var point=turf.point([feature.geometry.coordinates[0][0],feature.geometry.coordinates[0][1]]);
+   		//console.log(geo);
+   		//intersection = turf.inside(feature,geo.toGeoJSON());console.log(intersection);//PATRICK
+   		if (true) { return eval(chercher);} 
+   		//if ((intersection !== undefined) && (intersection !== null)){if (search!=''){;return eval(search);}else {return true;} } else return false;
+   	}
+   });		
+   tab[datadet.name]=det.getLayers().length;
+   	map.addLayer(det);
+   }
+</script>
+<script src="{% static 'oca/jquery-ui.min.js' %}"></script>
+<script>
+   $(".accordion").accordion();
+    $( ".button" ).button();
+   $( ".button-icon" ).button({
+   icon: "ui-icon ui-icon-circle-check",
+   showLabel: true
+   });
+      $( ".controlgroup" ).controlgroup();
+</script>
+<script type="text/javascript">
+   function exportF(elem) {
+     var table = document.getElementById("t");
+     var html = table.outerHTML;
+     var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+     elem.setAttribute("href", url);
+     elem.setAttribute("download", "export.xls"); // Choose the file name
+     return false;
+   }
+</script>
+<div id="fichier"></div>
+<div id="nmb"></div>
+<a id="downloadLink" onclick="exportF(this)">Exporter(excel)</a>
+<br/><br/>

@@ -1,0 +1,41 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block body_class %}partenaires{% endblock %}
+
+{% block body %}
+
+<section id="page_part">
+<div class="container">
+<div class="row">
+<div class="center gap">
+<h2>Partenaire</h2>
+</div>
+
+<div class="row">
+  <div class="col-md-8" ng-app="part" ng-controller="partCtrl">
+   {% include "partenaire/_partenaire_list_item.html" %}   
+  </div>
+</div>
+
+
+<!-- fin div par inst -->
+</div>
+</div> 
+</div>
+</div>
+</section>
+{% endblock %}
+
+{% block extra_script %}
+  <script type="text/javascript">
+  var app = angular.module('part', []);
+    app.controller('partCtrl', function($scope, $http) {
+    $http.get("/api/partenaire/")
+    .then(function (response) {$scope.part = response.data.objects;});
+});
+  </script>
+     
+{% endblock extra_script %}
+

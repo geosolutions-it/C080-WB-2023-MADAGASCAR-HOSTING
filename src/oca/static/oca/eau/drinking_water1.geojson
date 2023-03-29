@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "AnjezikaI",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "full_id": "n5915607384", "osm_id": "5915607384", "osm_type": "node", "amenity": "drinking_water", "toilets": "no", "name": "", "office": "", "building": "" }, "geometry": { "type": "Point", "coordinates": [ 47.508118, -18.9161094 ] } },
+{ "type": "Feature", "properties": { "full_id": "n5920353035", "osm_id": "5920353035", "osm_type": "node", "amenity": "drinking_water", "toilets": "", "name": "", "office": "", "building": "" }, "geometry": { "type": "Point", "coordinates": [ 47.5049406, -18.9144234 ] } },
+{ "type": "Feature", "properties": { "full_id": "n5920376197", "osm_id": "5920376197", "osm_type": "node", "amenity": "drinking_water", "toilets": "no", "name": "", "office": "", "building": "" }, "geometry": { "type": "Point", "coordinates": [ 47.506263, -18.9152463 ] } },
+{ "type": "Feature", "properties": { "full_id": "n5928281705", "osm_id": "5928281705", "osm_type": "node", "amenity": "drinking_water", "toilets": "no", "name": "Association Tanamasoandro", "office": "government", "building": "" }, "geometry": { "type": "Point", "coordinates": [ 47.5097795, -18.915875 ] } },
+{ "type": "Feature", "properties": { "full_id": "n5950948087", "osm_id": "5950948087", "osm_type": "node", "amenity": "drinking_water", "toilets": "", "name": "", "office": "", "building": "" }, "geometry": { "type": "Point", "coordinates": [ 47.5062184, -18.916677 ] } },
+{ "type": "Feature", "properties": { "full_id": "n5950948089", "osm_id": "5950948089", "osm_type": "node", "amenity": "drinking_water", "toilets": "", "name": "", "office": "", "building": "" }, "geometry": null },
+{ "type": "Feature", "properties": { "full_id": "n5950948090", "osm_id": "5950948090", "osm_type": "node", "amenity": "drinking_water", "toilets": "", "name": "", "office": "", "building": "" }, "geometry": null },
+{ "type": "Feature", "properties": { "full_id": "n5994974239", "osm_id": "5994974239", "osm_type": "node", "amenity": "drinking_water", "toilets": "", "name": "", "office": "", "building": "yes" }, "geometry": { "type": "Point", "coordinates": [ 47.507211, -18.9165672 ] } }
+]
+}
