@@ -265,14 +265,14 @@
    <div class="topnav"  id="menu" >
       <a href="#" onclick="openNav()" >
          <svg width="17" height="17" >
-            <path d="M0,5 30,5" stroke="#000" stroke-width="3"/>
-            <path d="M0,10 30,10" stroke="#000" stroke-width="3"/>
-            <path d="M0,15 30,15" stroke="#000" stroke-width="3"/>
+            <path d="M0,5 30,5" stroke="#fff" stroke-width="3"/>
+            <path d="M0,10 30,10" stroke="#fff" stroke-width="3"/>
+            <path d="M0,15 30,15" stroke="#fff" stroke-width="3"/>
          </svg>
       </a>
    </div>
    <div id="main">
-      <div id="map"></div>
+      <div id="map-oca"></div>
    </div>
 </div>
 <script>
@@ -303,7 +303,7 @@
    }
    var poly;
    //var fkt={}; -18.9168, 47.5046 //center: [-18.9163982, 47.5186375],
-     var map = L.map('map',{
+     var map = L.map('map-oca',{
       center: [-18.9181, 47.5085],
       zoom: 17
       });
@@ -680,7 +680,29 @@
    map.on(L.Draw.Event.DELETED, function (e) {
    	enlever('Selection','Selection');
    	$('#det').empty();
-      });	      
+      });
+   (function () {
+      function resizeWrapContainer() {
+         const mainHeader = document.querySelector('.gn-main-header');
+         const topbar = document.querySelector('#gn-topbar');
+         const footer = document.querySelector('.gn-footer');
+         const wrap = document.querySelector('#wrap');
+         if (wrap) {
+            if (mainHeader && topbar) {
+               wrap.style.top = (mainHeader.clientHeight + topbar.clientHeight) + 'px';
+            }
+            if (footer) {
+               wrap.style.bottom = (footer.clientHeight) + 'px';
+            }
+            wrap.style.position = 'absolute';
+            wrap.style.overflow = 'auto';
+            map.invalidateSize();
+         }
+      }
+      window.addEventListener('resize', resizeWrapContainer);
+      window.addEventListener('DOMContentLoaded', resizeWrapContainer);
+      resizeWrapContainer();
+})();
 </script>
 <script>
    function fkt_route(){
