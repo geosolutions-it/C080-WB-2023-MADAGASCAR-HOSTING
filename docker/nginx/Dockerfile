@@ -1,6 +1,5 @@
-FROM nginx:1.23.2-alpine
-
-RUN apk add --no-cache openssl inotify-tools
+ARG BASE_IMAGE_VERSION
+FROM geonode/nginx:${BASE_IMAGE_VERSION}
 
 WORKDIR /etc/nginx/
 
