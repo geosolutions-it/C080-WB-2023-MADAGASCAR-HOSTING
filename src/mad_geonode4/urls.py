@@ -18,7 +18,8 @@
 #
 #########################################################################
 
-from django.conf.urls import url, include
+from django.conf.urls import include
+from django.urls import re_path
 from django.views.generic import TemplateView
 
 from geonode.urls import urlpatterns
@@ -39,14 +40,14 @@ urlpatterns = [
 '''
 urlpatterns += [
 ## include your urls here
-    url(r'^partenaire/', include('partenaire.urls')),
+    re_path(r'^partenaire/', include('partenaire.urls')),
 ]
 
 urlpatterns = [
    # url(r'^/?$',
    #     TemplateView.as_view(template_name='site_index.html'),
    #     name='home'),
-   url(r'^oca',
+   re_path(r'^oca',
        HomePage.as_view(),
        name='home'),
 #    url(r'^/?$', HomePage.as_view(), name='home'),
