@@ -18,7 +18,7 @@ x-common-django:
   env_file:
     - .env
   volumes:
-    - './src:/usr/src/mad_geonode4'
+    # - './src:/usr/src/{{project_name}}'
     - statics:/mnt/volumes/statics
     - geoserver-data-dir:/geoserver_data/data
     - backup-restore:/backup_restore
@@ -26,8 +26,6 @@ x-common-django:
     - tmp:/tmp
   depends_on:
     db:
-      condition: service_healthy
-    geoserver:
       condition: service_healthy
   network_mode: "host"
   << : *common-hosts
@@ -76,11 +74,6 @@ services:
     env_file:
       - .env
     environment:
-      - HTTPS_HOST=${HTTPS_HOST}
-      - HTTP_HOST=${HTTP_HOST}
-      - HTTPS_PORT=${HTTPS_PORT}
-      - HTTP_PORT=${HTTP_PORT}
-      - LETSENCRYPT_MODE=${LETSENCRYPT_MODE}
       - RESOLVER=127.0.0.11
     network_mode: "host"
     << : *common-hosts
