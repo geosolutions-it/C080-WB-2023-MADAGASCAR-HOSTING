@@ -205,7 +205,7 @@ volumes:
   geoserver-data-dir:
     name: ${COMPOSE_PROJECT_NAME}-gsdatadir
   dbdata:
-    name: ${COMPOSE_PROJECT_NAME}-dbdata
+    name: ${COMPOSE_PROJECT_NAME}-dbdata_15
   dbbackups:
     name: ${COMPOSE_PROJECT_NAME}-dbbackups
   backup-restore:
