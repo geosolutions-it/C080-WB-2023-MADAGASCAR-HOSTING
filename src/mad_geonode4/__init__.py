@@ -20,7 +20,7 @@
 
 import os
 
-__version__ = (4, 0, 0, 'final', 0)
+__version__ = (4, 4, 1, "dev", 0)
 
 
 default_app_config = "mad_geonode4.apps.AppConfig"
@@ -28,4 +28,5 @@ default_app_config = "mad_geonode4.apps.AppConfig"
 
 def get_version():
     import mad_geonode4.version
+
     return mad_geonode4.version.get_version(__version__)
