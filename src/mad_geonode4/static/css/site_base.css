@@ -154,7 +154,6 @@
 .gn-homepage .box {
     padding: 5px 0px;
     background: #fff;
-    border-bottom: 1px solid #e9e9e9;
     position: relative;
 }
 
@@ -182,4 +181,8 @@
 
 .gn-homepage section + section {
     margin-top: 20px;
+}
+
+.member {
+    text-align: center;
 }
