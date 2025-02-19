@@ -193,6 +193,8 @@ services:
     container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
     volumes:
       - rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
     restart: unless-stopped
 
 volumes:
