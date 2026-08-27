@@ -30,11 +30,10 @@ def read(*rnames):
 
 setup(
     name="mad_geonode4",
-    version="4.4.1",
+    version="0.0.1",
     author="",
     author_email="",
     description="mad_geonode4, based on GeoNode",
-    long_description=(read("README.md")),
     # Full list of classifiers can be found at:
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
