@@ -89,7 +89,7 @@
    	document.getElementById("sideNavigation").style.width = "250px";
    	document.getElementById("main").style.marginLeft = "250px";
    	document.body.addEventListener('click', boxCloser, false);
-   	document.getElementById("fixer").style.position = "fixed";
+   	document.getElementById("fixer").style.position = "sticky";
    }
     function boxCloser(e){ 
      if((e.target.id != "sideNavigation") & (e.target.id != "")  & (e.target.parentElement.nodeName != "SECTION")   ){
@@ -678,9 +678,10 @@
    	selectionp();
       });
    map.on(L.Draw.Event.DELETED, function (e) {
-   	enlever('Selection','Selection');
-   	$('#det').empty();
-      });
+      enlever('Selection','Selection');
+      $('#det').empty();
+   });
+
    (function () {
       function resizeWrapContainer() {
          const mainHeader = document.querySelector('.gn-main-header');
@@ -688,21 +689,30 @@
          const footer = document.querySelector('.gn-footer');
          const wrap = document.querySelector('#wrap');
          if (wrap) {
-            if (mainHeader && topbar) {
-               wrap.style.top = (mainHeader.clientHeight + topbar.clientHeight) + 'px';
+            let topOffset = 0;
+            if (mainHeader) {
+               topOffset += mainHeader.clientHeight;
             }
+            if (topbar) {
+               topOffset += topbar.clientHeight;
+            }
+            wrap.style.top = topOffset + 'px';
             if (footer) {
                wrap.style.bottom = (footer.clientHeight) + 'px';
             }
+            wrap.style.left = '0px';
+            wrap.style.right = '0px';
             wrap.style.position = 'absolute';
             wrap.style.overflow = 'auto';
-            map.invalidateSize();
+            if (typeof map !== 'undefined' && map.invalidateSize) {
+               map.invalidateSize();
+            }
          }
       }
       window.addEventListener('resize', resizeWrapContainer);
       window.addEventListener('DOMContentLoaded', resizeWrapContainer);
       resizeWrapContainer();
-})();
+   })();
 </script>
 <script>
    function fkt_route(){
