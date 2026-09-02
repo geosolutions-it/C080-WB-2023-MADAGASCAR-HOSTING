@@ -196,8 +196,8 @@ services:
     container_name: redis4${COMPOSE_PROJECT_NAME}
     volumes:
       - redisdata:/data
-    ports:
-     - "6379:6379"
+    network_mode: "host"
+    << : *common-hosts
     restart: unless-stopped
 
 volumes:
