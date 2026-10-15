@@ -7,7 +7,8 @@ x-common-hosts: &common-hosts
     - "django:172.17.0.1"
     - "geonode:172.17.0.1"
     - "geoserver:172.17.0.1"
-    - "rabbitmq:172.17.0.1"
+    - "memcached:172.17.0.1"
+    - "redis:172.17.0.1"
     - "www.resiliencemada.gov.mg:172.17.0.1"
 
 # Common Django template for GeoNode and Celery services below
@@ -18,7 +19,7 @@ x-common-django:
   env_file:
     - .env
   volumes:
-    # - './src:/usr/src/{{project_name}}'
+    - './src:/usr/src/mad_geonode4'
     - statics:/mnt/volumes/statics
     - geoserver-data-dir:/geoserver_data/data
     - backup-restore:/backup_restore
@@ -92,6 +93,8 @@ services:
     container_name: memcached4${COMPOSE_PROJECT_NAME}
     command: memcached ${MEMCACHED_OPTIONS}
     restart: on-failure
+    network_mode: "host"
+    << : *common-hosts
     healthcheck:
       test: nc -z 127.0.0.1 11211
       interval: 30s
@@ -187,14 +190,14 @@ services:
     #ports:
     #  - "5432:5432"
 
-  # Vanilla RabbitMQ service. This is needed by celery
-  rabbitmq:
-    image: rabbitmq:3-alpine
-    container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
+  # Vanilla Redis service. This is needed by celery
+  redis:
+    image: redis:7-alpine
+    container_name: redis4${COMPOSE_PROJECT_NAME}
     volumes:
-      - rabbitmq:/var/lib/rabbitmq
-    ports:
-      - "5672:5672"
+      - redisdata:/data
+    network_mode: "host"
+    << : *common-hosts
     restart: unless-stopped
 
 volumes:
@@ -216,5 +219,5 @@ volumes:
     name: ${COMPOSE_PROJECT_NAME}-data
   tmp:
     name: ${COMPOSE_PROJECT_NAME}-tmp
-  rabbitmq:
-    name: ${COMPOSE_PROJECT_NAME}-rabbitmq
+  redisdata:
+    name: ${COMPOSE_PROJECT_NAME}-redisdata

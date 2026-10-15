@@ -42,13 +42,8 @@ def shuffle(chars):
     random.shuffle(chars_as_list)
     return "".join(chars_as_list)
 
-
 _simple_chars = shuffle(string.ascii_letters + string.digits)
-_strong_chars = shuffle(
-    string.ascii_letters
-    + string.digits
-    + string.punctuation.replace('"', "").replace("'", "").replace("`", "")
-)
+_strong_chars = shuffle(string.ascii_letters + string.digits + "#%*._~")
 
 
 def generate_env_file(args):
@@ -96,20 +91,18 @@ def generate_env_file(args):
             _jsfile.get("hostname", args.hostname) if tcp == "https" else ""
         )
 
-        _vals_to_replace["siteurl"] = (
-            f"{tcp}://{_jsfile.get('hostname', args.hostname)}"
-        )
+        _vals_to_replace[
+            "siteurl"
+        ] = f"{tcp}://{_jsfile.get('hostname', args.hostname)}"
         _vals_to_replace["secret_key"] = _jsfile.get(
             "secret_key", args.secret_key
         ) or "".join(random.choice(_strong_chars) for _ in range(50))
         _vals_to_replace["letsencrypt_mode"] = (
             "disabled"
             if not _vals_to_replace.get("https_host")
-            else (
-                "staging"
-                if _jsfile.get("env_type", args.env_type) in ["test"]
-                else "production"
-            )
+            else "staging"
+            if _jsfile.get("env_type", args.env_type) in ["test"]
+            else "production"
         )
         _vals_to_replace["debug"] = (
             False
@@ -143,7 +136,7 @@ if __name__ == "__main__":
         prog="ENV file builder",
         description="Tool for generate environment file automatically. The information can be passed or via CLI or via JSON file ( --file /path/env.json)",
         usage="python create-envfile.py localhost -f /path/to/json/file.json",
-        allow_abbrev=False,
+        allow_abbrev=False
     )
     parser.add_argument(
         "--noinput",
