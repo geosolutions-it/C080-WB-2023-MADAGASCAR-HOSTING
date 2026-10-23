@@ -52,13 +52,19 @@ WSGI_APPLICATION = "{}.wsgi.application".format(PROJECT_NAME)
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = os.getenv("LANGUAGE_CODE", "en")
 
-INSTALLED_APPS += ('partenaire', 'oca')
+INSTALLED_APPS += ('partenaire', 'oca','modeltranslation')
 # INSTALLED_APPS += ('oca',)
 if PROJECT_NAME not in INSTALLED_APPS:
     INSTALLED_APPS += (PROJECT_NAME,)
 
 if PROJECT_NAME not in INSTALLED_APPS:
     INSTALLED_APPS += (PROJECT_NAME,)
+
+MODELTRANSLATION_LANGUAGES = [
+    "en",
+]
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+MODELTRANSLATION_FALLBACK_LANGUAGES = ("en",)
 
 # Location of url mappings
 ROOT_URLCONF = os.getenv("ROOT_URLCONF", "{}.urls".format(PROJECT_NAME))
